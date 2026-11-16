@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: tom
+  name: tom
+spec:
+  replicas: 10
+  selector:
+    matchLabels:
+      app: tom
+  template:
+    metadata:
+      labels:
+        app: tom
+    spec:
+      containers:
+      - image: httpd:latest
+        name: httpd
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 2 
+      maxSurge: 1
+

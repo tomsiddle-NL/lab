@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: tom
+  name: tom
+spec:
+  replicas: 10
+  selector:
+    matchLabels:
+      app: tom
+  template:
+    metadata:
+      labels:
+        app: tom
+    spec:
+      containers:
+      - image: httpd:latest
+        name: httpd
+        command: ["/bin/bash", "-C"] # override the default command
+        args: ["sleep 5; exit 1"] # sleep for 5 sec and exit with error
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 1
+      maxSurge: 1
+
